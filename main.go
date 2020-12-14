@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
@@ -22,6 +23,8 @@ func main() {
 
 		w.Write([]byte(name))
 	})
+
+	r.Handle("/metrics", promhttp.Handler())
 
 	fmt.Println("Server listening on :3333")
 	http.ListenAndServe(":3333", r)
